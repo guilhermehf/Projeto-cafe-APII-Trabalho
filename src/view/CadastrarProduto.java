@@ -5,6 +5,8 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author guilherme
@@ -16,6 +18,14 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
      */
     public CadastrarProduto() {
         initComponents();
+        esconder();
+    }
+    
+    public void esconder(){
+        txtNome.setVisible(false);
+        txtPreco.setVisible(false);
+        txtTipo.setVisible(false);
+       
     }
 
     /**
@@ -48,6 +58,11 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jLabel3.setText("Preço:");
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -101,6 +116,42 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        String erro = "";
+        String nome = txtNome.getText();
+        
+        if( nome.isEmpty() ){
+            erro += "Nome\n";
+        }
+        
+        String tipo = "";
+        String tipo = txtTipo.getText();
+        
+            if(tipo.isEmpty()  ){
+                erro += "tipo\n";
+            }
+        
+        
+        Double preco = "";
+        Double preco = txtPreco.getText();
+        
+        if(preco.isEmpty){
+            erro += "preco\n";
+        }
+        
+        if( ! erro.isEmpty() ){
+            JOptionPane.showMessageDialog(this, 
+                "Você esqueceu de preencher os seguintes campos\n"
+                + erro );
+            
+        private void limpar(){
+        txtNome.setText("");
+        txtTipo.setText("");
+        txtPreco.setText("");
+        esconder();
+    }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
