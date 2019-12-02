@@ -76,6 +76,11 @@ public class TelaInicial extends javax.swing.JFrame {
         pedido.setText("Pedido");
 
         adicionarPedido.setText("adicionarPedido");
+        adicionarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adicionarPedidoActionPerformed(evt);
+            }
+        });
         pedido.add(adicionarPedido);
 
         jMenuBar1.add(pedido);
@@ -101,6 +106,12 @@ public class TelaInicial extends javax.swing.JFrame {
         jdpPainelInicial.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_cadastrarProdutoActionPerformed
+
+    private void adicionarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarPedidoActionPerformed
+        AdicionarPedido tela = new AdicionarPedido();
+        jdpPainelInicial.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_adicionarPedidoActionPerformed
 
     /**
      * @param args the command line arguments

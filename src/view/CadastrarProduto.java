@@ -5,6 +5,7 @@
  */
 package view;
 
+import dao.ProdutoDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -118,7 +119,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        String erro = "";
+       /* String erro = "";
         String nome = txtNome.getText();
         
         if( nome.isEmpty() ){
@@ -145,12 +146,74 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                 "Você esqueceu de preencher os seguintes campos\n"
                 + erro );
             
-        private void limpar(){
+            
+        }else{
+            
+           // Cliente cli = new Cliente();
+            
+            if( rbPF.isSelected() ){
+                CadastrarProduto cp = new CadastrarProduto();
+                cp.setNome( txtNome.getText());
+                cp.setTipo( txtTipo.getText());
+                cp.setPreco( txtPreco.getText());
+                
+                ProdutoDAO.inserir( cp );
+            }
+            limpar();    
+            
+       
+}
+        
+         private void limpar(){
         txtNome.setText("");
         txtTipo.setText("");
         txtPreco.setText("");
         esconder();
-    }
+    }*/
+       /*
+       // Cliente cli = new Cliente();
+            
+            if( rbPF.isSelected() ){
+                ClientePF pf = new ClientePF();
+                pf.setNome( nome );
+                pf.setCidade( cid );
+                pf.setEmail( txtEmail.getText() );
+                pf.setReceberEmail( cbReceberEmail.isSelected() );
+                pf.setCpf( cpf_cnpj );
+                pf.setTipo( Cliente.PESSOA_FISICA );
+                ClienteDAO.inserir( pf );
+            }else{
+                ClientePJ pj = new ClientePJ();
+                pj.setNome( nome );
+                pj.setCidade( cid );
+                pj.setEmail( txtEmail.getText() );
+                pj.setReceberEmail( cbReceberEmail.isSelected() );
+                pj.setCnpj( cpf_cnpj );
+                pj.setTipo( Cliente.PESSOA_JURIDICA);
+                ClienteDAO.inserir( pj );
+            }
+            limpar();
+        }
+    }                                         
+
+    private void limpar(){
+        txtNome.setText("");
+        txtEmail.setText("");
+        txtCPF.setText("");
+        txtCNPJ.setText("");
+        cmbCidade.setSelectedIndex( 0 );
+        cbReceberEmail.setSelected( false );
+        buttonGroupTipo.clearSelection();
+        esconder();
+    }  */
+       
+       CadastrarProduto pro = new CadastrarProduto();
+       
+       pro.setNome(txtNome);
+       pro.setTipo(txtTipo);
+       pro.setPreco(txtPreco);
+       ProdutoDAO.inserir(pro);
+       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 
