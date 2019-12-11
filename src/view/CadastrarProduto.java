@@ -7,6 +7,7 @@ package view;
 
 import dao.ProdutoDAO;
 import javax.swing.JOptionPane;
+import model.Produto;
 
 /**
  *
@@ -19,7 +20,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
      */
     public CadastrarProduto() {
         initComponents();
-        esconder();
+        
     }
     
     public void esconder(){
@@ -207,12 +208,28 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         esconder();
     }  */
        
-       CadastrarProduto pro = new CadastrarProduto();
+       //CadastrarProduto pro = new CadastrarProduto();
+        Produto pro = new Produto();
        
-       pro.setNome(txtNome);
-       pro.setTipo(txtTipo);
-       pro.setPreco(txtPreco);
+       
+       pro.setNome(txtNome.getText());
+       pro.setTipo(txtTipo.getText());
+       pro.setPreco(Double.valueOf(txtPreco.getText()));
        ProdutoDAO.inserir(pro);
+       
+       
+       /*String nome = txtNome.getText();
+        if( nome.isEmpty() ){
+            JOptionPane.showMessageDialog(this, 
+                    "Você deve preencher o nome!");
+        }else{
+            Cidade cid = new Cidade();
+            cid.setNome( nome );
+            CidadeDAO.inserir( cid );
+            txtNome.setText("");
+        }
+    }                                         
+*/
        
     }//GEN-LAST:event_btnSalvarActionPerformed
 

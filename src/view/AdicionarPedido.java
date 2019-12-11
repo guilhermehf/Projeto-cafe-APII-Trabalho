@@ -5,18 +5,89 @@
  */
 package view;
 
+import dao.ProdutoDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import model.Produto;
+
 /**
  *
  * @author guilherme
  */
 public class AdicionarPedido extends javax.swing.JInternalFrame {
-
+    //faz uma list da classe Produto e seleciona a variavel produtosSelecionados.
+    private List<Produto> produtosSelecionados;
     /**
      * Creates new form AdicionarPedido
      */
     public AdicionarPedido() {
         initComponents();
+        //uso o metodod construtor cria uma variavel produtosSelecionados  que recebe um arrayList
+        produtosSelecionados = new ArrayList<>();
+        carregarProduto();
+        //carregarTabela();
+        
     }
+    
+    private void carregarProduto(){
+        /* private void carregarCidades(){
+        
+        List<Cidade> listaCidades = 
+                CidadeDAO.getCidades();
+        DefaultComboBoxModel model = 
+                new DefaultComboBoxModel();
+        Cidade fake = new Cidade();
+        fake.setId(0);
+        fake.setNome("Selecione...");
+        model.addElement( fake );
+        for (Cidade cid : listaCidades) {
+            model.addElement( cid );
+        }
+        cmbCidade.setModel( model );
+        
+    }*/
+        List<Produto> listaProduto = ProdutoDAO.getProduto();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        Produto fake = new Produto();
+        fake.setNome("Selecione...");
+        model.addElement( fake);
+        for (Produto pro : listaProduto){
+            model.addElement(pro);
+        }
+        cmbPedido.setModel(model);
+       
+        
+        
+        
+            
+        
+    }
+    
+    private void carregarTabela(){
+      
+        DefaultTableModel model = new DefaultTableModel();
+        String[] colunas = {"Codigo","Nome","Tipo","preco"};
+        
+        
+        model.setColumnIdentifiers(colunas);
+        
+        for(Produto pro:produtosSelecionados){
+            
+            Object[] linha = { pro.getId(),pro.getNome(),pro.getTipo(),pro.getPreco()};
+            model.addRow(linha);
+             
+                   
+
+                
+        
+            
+        }
+        tableProdutosSelecionados.setModel( model );
+    }
+    
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,13 +99,16 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        tableProdutosSelecionados = new javax.swing.JTable();
+        cmbPedido = new javax.swing.JComboBox<>();
+        btnAdicionar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Adicionar Pedido");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableProdutosSelecionados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -45,11 +119,21 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableProdutosSelecionados);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPedidoActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("+");
+        btnAdicionar.setText("+");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,9 +146,9 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btnAdicionar)))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -72,8 +156,8 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdicionar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -82,11 +166,28 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        //if seleciona a barra de pedidos e aceita qualquer coisa diferente de zero para não selecionar o select.
+        if(cmbPedido.getSelectedIndex() != 0){
+        //de traz para frente(a barra de pedidos usa o object selecionarItem e seleciona a classe produto e adiciona na tabela produtosSelecionados.
+        produtosSelecionados.add( (Produto) cmbPedido.getSelectedItem()  );
+        //E carrega a funcao carregarTabela();
+        carregarTabela();
+        }
+                
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void cmbPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPedidoActionPerformed
+        
+        
+        
+    }//GEN-LAST:event_cmbPedidoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JComboBox<String> cmbPedido;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableProdutosSelecionados;
     // End of variables declaration//GEN-END:variables
 }

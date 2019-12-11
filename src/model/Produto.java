@@ -6,7 +6,7 @@ public class Produto {
     
     private int id;
     private String nome;
-    private int preco;
+    private double preco;
     private String tipo;
 
     public int getId() {
@@ -25,11 +25,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public int getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(int preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
@@ -40,5 +40,12 @@ public class Produto {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return nome; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }
