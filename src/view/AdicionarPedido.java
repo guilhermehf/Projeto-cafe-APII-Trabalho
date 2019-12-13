@@ -5,11 +5,16 @@
  */
 package view;
 
+import dao.PedidoDAO;
+import dao.ProdpadDAO;
 import dao.ProdutoDAO;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import model.Pedido;
+import model.Prodpad;
 import model.Produto;
 
 /**
@@ -19,6 +24,7 @@ import model.Produto;
 public class AdicionarPedido extends javax.swing.JInternalFrame {
     //faz uma list da classe Produto e seleciona a variavel produtosSelecionados.
     private List<Produto> produtosSelecionados;
+    
     /**
      * Creates new form AdicionarPedido
      */
@@ -67,6 +73,27 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
     
     private void carregarTabela(){
       
+        /*DefaultTableModel model = new DefaultTableModel();
+        String[] colunas = {"Codigo","Nome","Tipo","preco"};
+        
+        
+        model.setColumnIdentifiers(colunas);
+        
+        for(Produto pro:produtosSelecionados){
+            
+            Object[] linha = { pro.getId(),pro.getNome(),pro.getTipo(),pro.getPreco()};
+            model.addRow(linha);
+             
+                   
+
+                
+        
+            
+        }
+        tableProdutosSelecionados.setModel( model );*/
+        
+        
+        
         DefaultTableModel model = new DefaultTableModel();
         String[] colunas = {"Codigo","Nome","Tipo","preco"};
         
@@ -85,6 +112,12 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
             
         }
         tableProdutosSelecionados.setModel( model );
+        
+        
+        
+       
+        
+        
     }
     
   
@@ -102,6 +135,7 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
         tableProdutosSelecionados = new javax.swing.JTable();
         cmbPedido = new javax.swing.JComboBox<>();
         btnAdicionar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -135,6 +169,13 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
             }
         });
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,13 +184,15 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdicionar)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,9 +201,15 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdicionar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(btnSalvar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -183,9 +232,43 @@ public class AdicionarPedido extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_cmbPedidoActionPerformed
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Pedido ped = new Pedido();
+        
+        Calendar hoje = Calendar.getInstance();
+        String data = hoje.get(Calendar.YEAR) + "-" + (hoje.get(Calendar.MONTH) +1 ) + "-" + hoje.get(Calendar.DAY_OF_MONTH)   ;
+        ped.setData(data);
+        
+        int idPedido = PedidoDAO.inserir(ped);
+        
+        for(Produto pro: produtosSelecionados ){
+            Prodpad prodpad = new Prodpad();
+            prodpad.setCodPedido(idPedido);
+            prodpad.setCodProduto(pro.getId());
+            prodpad.setPreco(pro.getPreco());
+            prodpad.setQtd(1);
+            ProdpadDAO.inserir(prodpad);
+        }
+        
+        
+//        
+//        int p;
+//        int m;
+//        
+//        
+//        ped.getId();
+//         p = prod.getCodPedido() = ped.getId();
+//         m = prod.getCodProduto() = model.getId();
+//         
+        
+        
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cmbPedido;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProdutosSelecionados;

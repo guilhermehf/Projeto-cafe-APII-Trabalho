@@ -216,6 +216,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
        pro.setTipo(txtTipo.getText());
        pro.setPreco(Double.valueOf(txtPreco.getText()));
        ProdutoDAO.inserir(pro);
+       this.dispose();
        
        
        /*String nome = txtNome.getText();

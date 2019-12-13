@@ -5,6 +5,11 @@
  */
 package view;
 
+import dao.ProdutoDAO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Produto;
+
 /**
  *
  * @author guilherme
@@ -16,6 +21,38 @@ public class listarProduto extends javax.swing.JInternalFrame {
      */
     public listarProduto() {
         initComponents();
+        listarProdutoDono();
+    }
+    
+    public void listarProdutoDono(){
+        
+        /*List<Categorias> lista = CategoriasDAO.getCategorias();
+        DefaultTableModel model = new DefaultTableModel();
+        String[] colunas = {"Código","Nome"};
+        
+        
+        model.setColumnIdentifiers(colunas);
+        
+        for(Categorias cate : lista){
+            Object[] linha = {cate.getId(),cate.getNome()};
+            model.addRow(linha);
+        }
+        
+        tableCategorias.setModel(model);*/
+        
+        List<Produto> lista = ProdutoDAO.getProduto();
+        DefaultTableModel model = new DefaultTableModel();
+        String[] colunas = {"Codigo","Nome","Tipo","Preco"};
+        
+        model.setColumnIdentifiers(colunas);
+        
+        for(Produto pro: lista){
+            Object[] linha = {pro.getId(),pro.getNome(),pro.getTipo(),pro.getPreco()};
+            model.addRow(linha);
+        }
+        
+        txtTabela.setModel(model);
+        
     }
 
     /**
@@ -44,7 +81,7 @@ public class listarProduto extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nome", "Tipo", "Preco"
             }
         ));
         jScrollPane1.setViewportView(txtTabela);

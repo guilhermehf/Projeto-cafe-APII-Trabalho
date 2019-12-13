@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -22,8 +23,7 @@ public class Conexao {
     public static void executar(String query){
         try {
             Class.forName( DRIVER );
-            Connection conn = 
-                DriverManager.getConnection(URL,USER,SENHA);
+            Connection conn = DriverManager.getConnection(URL,USER,SENHA);
             Statement st = conn.createStatement();
             st.execute( query );
             conn.close();
@@ -34,6 +34,26 @@ public class Conexao {
         }
     }
     
+    public static int executarComRetornoId(String query){
+        
+        try {
+            
+            Class.forName( DRIVER );
+            Connection conn = DriverManager.getConnection(URL,USER,SENHA);
+            PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+           
+            st.executeUpdate();
+            ResultSet rs = st.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            conn.close();
+            return id;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog
+                (null, e.toString());
+            return 0;
+        }
+    }
     
     public static ResultSet consultar(String query){
         try {
