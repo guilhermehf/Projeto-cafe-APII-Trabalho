@@ -27,6 +27,11 @@ public class Pedido {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return getId() + " - " + getData();
+    }
+
    
     }
 

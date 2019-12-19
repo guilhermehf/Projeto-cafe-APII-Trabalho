@@ -56,5 +56,12 @@ public class Prodpad {
     public void setQtd(int qtd) {
         this.qtd = qtd;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(getId());
+    }
+    
+    
     
 }

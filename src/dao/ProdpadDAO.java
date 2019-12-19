@@ -38,7 +38,7 @@ public class ProdpadDAO {
     }
     
     public static void excluir(int id){
-        String query = "DELETE FROM prodpad "
+        String query = "DELETE FROM prodped "
                      + " WHERE id = " + id;
         Conexao.executar(query);
     }
@@ -65,7 +65,7 @@ public class ProdpadDAO {
     
     public static List<Prodpad> getProdpad(){
         List<Prodpad> lista = new ArrayList<>();
-        String query = "Select id, codPedido,codProduto,preco,qtd FROM prodpad order by id";
+        String query = "Select id, codPedido,codProduto,preco,qtd FROM prodped order by id";
         ResultSet rs = Conexao.consultar(query);
         if(rs != null){
             try{
